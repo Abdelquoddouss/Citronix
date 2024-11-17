@@ -22,6 +22,7 @@ public class Champ {
     @JoinColumn(name = "ferme_id")
     private Ferme ferme;
 
+
     @OneToMany(mappedBy = "champ", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Arbre> arbres;
 }

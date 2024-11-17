@@ -16,6 +16,7 @@ public class Vente {
     @GeneratedValue(generator = "UUID", strategy = GenerationType.AUTO)
     private UUID id;
 
+
     private LocalDate dateVente;
 
     private Double quantiteVendue;

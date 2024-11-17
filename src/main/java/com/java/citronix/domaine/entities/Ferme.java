@@ -13,6 +13,7 @@ import java.util.UUID;
 @Setter
 public class Ferme {
 
+
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.AUTO)
     private UUID id;

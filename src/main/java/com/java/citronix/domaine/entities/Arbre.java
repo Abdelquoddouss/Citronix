@@ -23,6 +23,7 @@ public class Arbre {
     @JoinColumn(name = "champ_id")
     private Champ champ;
 
+
     @OneToMany(mappedBy = "arbre", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailRecolte> detailsRecolte;
 }
