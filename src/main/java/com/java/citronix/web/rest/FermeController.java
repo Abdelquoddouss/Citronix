@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,6 +43,15 @@ public class FermeController {
     public ResponseEntity<FermeVm> getFermeById(@PathVariable UUID id) {
         Ferme ferme = fermeService.getFermeById(id);
         return ResponseEntity.ok(fermeMapper.toVm(ferme));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<FermeVm>> getAllFermes() {
+        List<Ferme> fermes = fermeService.getAllFermes();
+        List<FermeVm> fermeVms = fermes.stream()
+                .map(fermeMapper::toVm)
+                .toList();
+        return ResponseEntity.ok(fermeVms);
     }
 
 

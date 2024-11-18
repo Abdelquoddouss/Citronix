@@ -12,8 +12,8 @@ public interface FermeService {
    Ferme updateFerme(UUID id, Ferme ferme);
 
     Ferme getFermeById(UUID id);
-//
-//    List<Ferme> getAllFermes();
+
+   List<Ferme> getAllFermes();
 //
 //    void deleteFerme(UUID id);
 }

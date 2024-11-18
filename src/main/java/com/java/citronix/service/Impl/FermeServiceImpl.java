@@ -43,5 +43,12 @@ public class FermeServiceImpl implements FermeService {
     }
 
 
+    @Override
+    public List<Ferme> getAllFermes() {
+        return fermeRepository.findAll();
+    }
+
+
+
 
 }
