@@ -2,6 +2,7 @@ package com.java.citronix.service.Impl;
 
 
 import com.java.citronix.domaine.entities.Ferme;
+import com.java.citronix.exception.FermeNotFoundException;
 import com.java.citronix.exception.ResourceNotFoundException;
 import com.java.citronix.repository.FermeRepository;
 import com.java.citronix.service.FermeService;
@@ -51,7 +52,7 @@ public class FermeServiceImpl implements FermeService {
     @Override
     public void deleteFerme(UUID id) {
         Ferme ferme = fermeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Ferme not found with id: " + id));
+                .orElseThrow(() -> new FermeNotFoundException("Ferme not found with id: " + id));
         fermeRepository.delete(ferme);
     }
 

@@ -1,5 +1,6 @@
 package com.java.citronix.web.error;
 
+import com.java.citronix.exception.FermeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,6 +21,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleGenericException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + ex.getMessage());
 
+    }
 
+    @ExceptionHandler(FermeNotFoundException.class)
+    public ResponseEntity<String> handleFermeNotFoundException(FermeNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
