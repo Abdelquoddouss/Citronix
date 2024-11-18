@@ -1,0 +1,11 @@
+name: citronix
+services:
+  postgres:
+    container_name: citronix_db
+    image: 'postgres:17'
+    environment:
+      - 'POSTGRES_DB=citronix'
+      - 'POSTGRES_PASSWORD=citronix'
+      - 'POSTGRES_USER=citronix'
+    ports:
+      - '5433:5432'

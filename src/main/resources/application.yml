@@ -1,0 +1,14 @@
+spring:
+  docker:
+    compose:
+      file: src/main/docker/compose.yml
+      enabled: true
+      lifecycle-management: start_only
+
+  liquibase:
+    change-log: db/changelog/changelog-master.yaml
+    enabled: false
+
+  server:
+    port: 8081
+
