@@ -55,5 +55,11 @@ public class FermeController {
     }
 
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteFerme(@PathVariable UUID id) {
+        fermeService.deleteFerme(id);
+        return ResponseEntity.ok("Ferme deleted successfully");
+    }
+
 
 }

@@ -48,6 +48,13 @@ public class FermeServiceImpl implements FermeService {
         return fermeRepository.findAll();
     }
 
+    @Override
+    public void deleteFerme(UUID id) {
+        Ferme ferme = fermeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Ferme not found with id: " + id));
+        fermeRepository.delete(ferme);
+    }
+
 
 
 
