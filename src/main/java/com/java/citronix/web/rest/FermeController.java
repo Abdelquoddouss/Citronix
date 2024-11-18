@@ -30,9 +30,11 @@ public class FermeController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<FermeVm> updateFerme(@PathVariable UUID id, @Valid @RequestBody FermeVm fermeVm) {
+
         Ferme fermeDetails = fermeMapper.toEntity(fermeVm);
         Ferme updatedFerme = fermeService.updateFerme(id, fermeDetails);
         return ResponseEntity.ok(fermeMapper.toVm(updatedFerme));
+
     }
 
 
