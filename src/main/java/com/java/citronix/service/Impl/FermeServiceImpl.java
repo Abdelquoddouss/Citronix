@@ -2,6 +2,7 @@ package com.java.citronix.service.Impl;
 
 
 import com.java.citronix.domaine.entities.Ferme;
+import com.java.citronix.exception.ResourceNotFoundException;
 import com.java.citronix.repository.FermeRepository;
 import com.java.citronix.service.FermeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class FermeServiceImpl implements FermeService {
         return fermeRepository.save(existingFerme);
     }
 
+    @Override
+    public Ferme getFermeById(UUID id) {
+        return fermeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Ferme with ID " + id + " not found"));
+    }
 
 
 

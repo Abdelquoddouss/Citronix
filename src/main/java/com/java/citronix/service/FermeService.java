@@ -10,8 +10,8 @@ public interface FermeService {
     Ferme createFerme(Ferme ferme);
 
    Ferme updateFerme(UUID id, Ferme ferme);
-//
-//    Ferme getFermeById(UUID id);
+
+    Ferme getFermeById(UUID id);
 //
 //    List<Ferme> getAllFermes();
 //

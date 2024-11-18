@@ -38,5 +38,12 @@ public class FermeController {
     }
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<FermeVm> getFermeById(@PathVariable UUID id) {
+        Ferme ferme = fermeService.getFermeById(id);
+        return ResponseEntity.ok(fermeMapper.toVm(ferme));
+    }
+
+
 
 }
