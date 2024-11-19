@@ -11,16 +11,9 @@ import com.java.citronix.repository.FermeSearchRepository;
 import com.java.citronix.service.FermeService;
 import com.java.citronix.web.vm.FermeSearchResultVm;
 import com.java.citronix.web.vm.FermeSearchVm;
-import com.java.citronix.web.vm.FermeVm;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
