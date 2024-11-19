@@ -6,13 +6,20 @@ import com.java.citronix.exception.FermeNotFoundException;
 import com.java.citronix.exception.ResourceNotFoundException;
 import com.java.citronix.repository.FermeRepository;
 import com.java.citronix.service.FermeService;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+@Service("fermeService")
+@RequiredArgsConstructor
 public class FermeServiceImpl implements FermeService {
 
 
@@ -49,12 +56,15 @@ public class FermeServiceImpl implements FermeService {
         return fermeRepository.findAll();
     }
 
+
+
     @Override
     public void deleteFerme(UUID id) {
         Ferme ferme = fermeRepository.findById(id)
                 .orElseThrow(() -> new FermeNotFoundException("Ferme not found with id: " + id));
         fermeRepository.delete(ferme);
     }
+
 
 
 

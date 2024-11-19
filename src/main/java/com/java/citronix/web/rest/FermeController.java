@@ -5,12 +5,18 @@ import com.java.citronix.domaine.entities.Ferme;
 import com.java.citronix.service.FermeService;
 import com.java.citronix.web.vm.FermeVm;
 import com.java.citronix.web.vm.mappers.FermeMapper;
+import com.java.citronix.web.vm.response.FermeResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.hibernate.query.Page;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,8 +25,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class FermeController {
 
-    private final FermeService fermeService;
-    private final FermeMapper fermeMapper;
+    @Qualifier("fermeService2")
+     private final FermeService fermeService;
+     private final FermeMapper fermeMapper;
 
     @PostMapping("/create")
     public ResponseEntity<String> createFerme(@Valid @RequestBody FermeVm fermeVm) {
@@ -60,6 +67,10 @@ public class FermeController {
         fermeService.deleteFerme(id);
         return ResponseEntity.ok("Ferme deleted successfully");
     }
+
+
+
+
 
 
 }

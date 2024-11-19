@@ -1,7 +1,9 @@
 package com.java.citronix.service;
 
 import com.java.citronix.domaine.entities.Ferme;
+import org.hibernate.query.Page;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,5 +17,8 @@ public interface FermeService {
 
    List<Ferme> getAllFermes();
 
-   void deleteFerme(UUID id);
-}
+
+    void deleteFerme(UUID id);
+
+
+    }
