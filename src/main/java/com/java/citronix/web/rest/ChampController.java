@@ -5,6 +5,7 @@ import com.java.citronix.service.ChampService;
 import com.java.citronix.web.vm.ChampVm;
 import com.java.citronix.web.vm.mappers.ChampMapper;
 import com.java.citronix.web.vm.response.ChampResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,8 @@ public class ChampController {
         return ResponseEntity.ok(champMapper.toResponse(updatedChamp));
     }
 
-
-
     @GetMapping("/{champId}")
-    public ResponseEntity<ChampResponse> getChampById(@PathVariable UUID champId) {
+    public ResponseEntity<ChampResponse> getChampById(@PathVariable @Valid UUID champId) {
         Champ champ = champService.getChampById(champId);
         return ResponseEntity.ok(champMapper.toResponse(champ));
     }
