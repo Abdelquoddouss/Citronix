@@ -1,6 +1,7 @@
 package com.java.citronix.web.rest;
 
 import com.java.citronix.domaine.entities.Champ;
+import com.java.citronix.dto.ChampWithFermeResponse;
 import com.java.citronix.service.ChampService;
 import com.java.citronix.web.vm.ChampVm;
 import com.java.citronix.web.vm.mappers.ChampMapper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -45,6 +47,16 @@ public class ChampController {
         Champ champ = champService.getChampById(champId);
         return ResponseEntity.ok(champMapper.toResponse(champ));
     }
+
+    @GetMapping("/ferme/{fermeId}")
+    public ResponseEntity<List<ChampWithFermeResponse>> getAllChampsByFerme(@PathVariable UUID fermeId) {
+        List<Champ> champs = champService.getAllChampsByFerme(fermeId);
+        List<ChampWithFermeResponse> response = champs.stream()
+                .map(champMapper::toChampWithFermeResponse)
+                .toList();
+        return ResponseEntity.ok(response);
+    }
+
 
 
 }

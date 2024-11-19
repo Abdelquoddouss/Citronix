@@ -9,6 +9,7 @@ import com.java.citronix.service.ChampService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -46,5 +47,11 @@ public class ChampServiceImpl implements ChampService {
                 .orElseThrow(() -> new ResourceNotFoundException("Champ not found with ID: " + champId));
     }
 
+    @Override
+    public List<Champ> getAllChampsByFerme(UUID fermeId) {
+        Ferme ferme = fermeRepository.findById(fermeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ferme not found with ID: " + fermeId));
+        return champRepository.findByFerme(ferme);
+    }
 
 }
