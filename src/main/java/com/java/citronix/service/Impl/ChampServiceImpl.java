@@ -32,10 +32,17 @@ public class ChampServiceImpl implements ChampService {
         if (champ.getSuperficie() < 0.1) {
             throw new SuperficieValidationException("The field area must be at least 0.1 hectare (1,000 m²).");
         }
+
+        // Vérifier que la superficie du champ ne dépasse pas 50 % de la superficie de la ferme
+        if (champ.getSuperficie() > ferme.getSuperficie() * 0.5) {
+            throw new SuperficieValidationException("The field area must not exceed 50% of the farm's area.");
+        }
+
         // Calculer la somme des superficies existantes des champs
         double totalSuperficie = ferme.getChamps().stream()
                 .mapToDouble(Champ::getSuperficie)
                 .sum();
+
         // Ajouter la superficie du nouveau champ
         totalSuperficie += champ.getSuperficie();
 
@@ -50,6 +57,7 @@ public class ChampServiceImpl implements ChampService {
 
 
 
+
     @Override
     public Champ updateChamp(UUID champId, Champ champDetails) {
         Champ existingChamp = champRepository.findById(champId)
@@ -59,7 +67,13 @@ public class ChampServiceImpl implements ChampService {
         if (champDetails.getSuperficie() < 0.1) {
             throw new SuperficieValidationException("The field area must be at least 0.1 hectare (1,000 m²).");
         }
+
         Ferme ferme = existingChamp.getFerme();
+
+        // Vérifier que la superficie du champ ne dépasse pas 50 % de la superficie de la ferme
+        if (champDetails.getSuperficie() > ferme.getSuperficie() * 0.5) {
+            throw new SuperficieValidationException("The field area must not exceed 50% of the farm's area.");
+        }
 
         // Calculer la somme des superficies existantes des champs, en excluant le champ actuel
         double totalSuperficie = ferme.getChamps().stream()
@@ -74,6 +88,7 @@ public class ChampServiceImpl implements ChampService {
         if (totalSuperficie >= ferme.getSuperficie()) {
             throw new SuperficieValidationException("The total area of the fields exceeds the farm's available area.");
         }
+
         existingChamp.setSuperficie(champDetails.getSuperficie());
         // Mettre à jour d'autres champs si nécessaire
         return champRepository.save(existingChamp);
