@@ -54,4 +54,12 @@ public class ChampServiceImpl implements ChampService {
         return champRepository.findByFerme(ferme);
     }
 
+    @Override
+    public void deleteChamp(UUID champId) {
+        Champ champ = champRepository.findById(champId)
+                .orElseThrow(() -> new ResourceNotFoundException("Champ not found with ID: " + champId));
+
+        champRepository.delete(champ);
+    }
+
 }

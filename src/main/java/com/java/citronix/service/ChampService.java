@@ -11,7 +11,7 @@ public interface ChampService {
     Champ updateChamp(UUID champId, Champ champDetails);
     Champ getChampById(UUID champId);
     List<Champ> getAllChampsByFerme(UUID fermeId);
-//    void deleteChamp(UUID champId);
+    void deleteChamp(UUID champId);
 
 
 }

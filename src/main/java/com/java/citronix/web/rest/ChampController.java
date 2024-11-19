@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -58,5 +60,13 @@ public class ChampController {
     }
 
 
+    @DeleteMapping("/{champId}")
+    public ResponseEntity<Map<String, String>> deleteChamp(@PathVariable UUID champId) {
+        champService.deleteChamp(champId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Champ with ID " + champId + " has been successfully deleted.");
+        return ResponseEntity.ok(response);
+    }
 
 }
