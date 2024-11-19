@@ -33,10 +33,12 @@ public class ChampController {
     public ResponseEntity<ChampResponse> updateChamp(
             @PathVariable UUID champId,
             @RequestBody ChampVm champVm) {
+
         Champ champDetails = champMapper.toEntity(champVm);
         Champ updatedChamp = champService.updateChamp(champId, champDetails);
         return ResponseEntity.ok(champMapper.toResponse(updatedChamp));
     }
+
 
 
     @GetMapping("/{champId}")
