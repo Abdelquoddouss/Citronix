@@ -1,6 +1,8 @@
 package com.java.citronix.web.error;
 
 import com.java.citronix.exception.FermeNotFoundException;
+import com.java.citronix.exception.InvalidSearchCriteriaException;
+import com.java.citronix.exception.NoResultsFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,5 +34,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FermeNotFoundException.class)
     public ResponseEntity<String> handleFermeNotFoundException(FermeNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(NoResultsFoundException.class)
+    public ResponseEntity<String> handleNoResultsFound(NoResultsFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidSearchCriteriaException.class)
+    public ResponseEntity<String> handleInvalidSearchCriteria(InvalidSearchCriteriaException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }

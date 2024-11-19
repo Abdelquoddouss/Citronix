@@ -26,4 +26,10 @@ public class FermeVm {
 
     @NotNull(message = "Date de création is required")
     private LocalDate dateCreation;
+
+    public FermeVm(String nom, String localisation, LocalDate dateCreation) {
+        this.nom = nom;
+        this.localisation = localisation;
+        this.dateCreation = dateCreation;
+    }
 }

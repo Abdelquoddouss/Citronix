@@ -3,9 +3,15 @@ package com.java.citronix.service.Impl;
 
 import com.java.citronix.domaine.entities.Ferme;
 import com.java.citronix.exception.FermeNotFoundException;
+import com.java.citronix.exception.InvalidSearchCriteriaException;
+import com.java.citronix.exception.NoResultsFoundException;
 import com.java.citronix.exception.ResourceNotFoundException;
 import com.java.citronix.repository.FermeRepository;
+import com.java.citronix.repository.FermeSearchRepository;
 import com.java.citronix.service.FermeService;
+import com.java.citronix.web.vm.FermeSearchResultVm;
+import com.java.citronix.web.vm.FermeSearchVm;
+import com.java.citronix.web.vm.FermeVm;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.Page;
@@ -18,13 +24,16 @@ import java.awt.print.Pageable;
 import java.util.List;
 import java.util.UUID;
 
-@Service("fermeService")
-@RequiredArgsConstructor
+@Service
 public class FermeServiceImpl implements FermeService {
 
 
     @Autowired
     private FermeRepository fermeRepository;
+
+    @Autowired
+    private FermeSearchRepository fermeSearchRepository;
+
 
     @Override
     public Ferme createFerme(Ferme ferme) {
@@ -65,7 +74,21 @@ public class FermeServiceImpl implements FermeService {
         fermeRepository.delete(ferme);
     }
 
+    @Override
+    public List<FermeSearchResultVm> findByCriteria(FermeSearchVm search) {
+        if ((search.getNom() == null || search.getNom().trim().isEmpty()) &&
+                (search.getLocalisation() == null || search.getLocalisation().trim().isEmpty())) {
+            throw new InvalidSearchCriteriaException("Au moins un critère de recherche (nom ou localisation) doit être spécifié.");
+        }
 
+        List<FermeSearchResultVm> results = fermeSearchRepository.findByCriteria(search);
+
+        if (results.isEmpty()) {
+            throw new NoResultsFoundException("Aucun résultat trouvé pour les critères donnés.");
+        }
+
+        return results;
+    }
 
 
 

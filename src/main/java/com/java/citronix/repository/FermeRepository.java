@@ -13,13 +13,5 @@ import java.util.UUID;
 @Repository
 public interface FermeRepository extends JpaRepository<Ferme, UUID> {
 
-    @Query("SELECT f FROM Ferme f WHERE " +
-            "(LOWER(f.nom) LIKE LOWER(CONCAT('%', :nom, '%')) OR :nom IS NULL) AND " +
-            "(LOWER(f.localisation) LIKE LOWER(CONCAT('%', :localisation, '%')) OR :localisation IS NULL)")
-    List<Ferme> searchFermes(@Param("nom") String nom, @Param("localisation") String localisation);
-
-    List<Ferme> findByMaximumArea(double maxArea);
-    Ferme findByNom(String nom);
-
 
 }
