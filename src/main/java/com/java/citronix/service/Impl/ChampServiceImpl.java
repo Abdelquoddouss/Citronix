@@ -28,12 +28,18 @@ public class ChampServiceImpl implements ChampService {
         Ferme ferme = fermeRepository.findById(fermeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ferme not found with ID: " + fermeId));
 
+        // Vérifier que la superficie est au moins de 0,1 hectare
+        if (champ.getSuperficie() < 0.1) {
+            throw new SuperficieValidationException("The field area must be at least 0.1 hectare (1,000 m²).");
+        }
+        // Calculer la somme des superficies existantes des champs
         double totalSuperficie = ferme.getChamps().stream()
                 .mapToDouble(Champ::getSuperficie)
                 .sum();
-
+        // Ajouter la superficie du nouveau champ
         totalSuperficie += champ.getSuperficie();
 
+        // Vérifier si la superficie totale dépasse celle de la ferme
         if (totalSuperficie >= ferme.getSuperficie()) {
             throw new SuperficieValidationException("The total area of the fields exceeds the farm's available area.");
         }
@@ -43,24 +49,33 @@ public class ChampServiceImpl implements ChampService {
     }
 
 
+
     @Override
     public Champ updateChamp(UUID champId, Champ champDetails) {
         Champ existingChamp = champRepository.findById(champId)
                 .orElseThrow(() -> new ResourceNotFoundException("Champ not found with ID: " + champId));
 
+        // Vérifier que la superficie est au moins de 0,1 hectare
+        if (champDetails.getSuperficie() < 0.1) {
+            throw new SuperficieValidationException("The field area must be at least 0.1 hectare (1,000 m²).");
+        }
         Ferme ferme = existingChamp.getFerme();
 
+        // Calculer la somme des superficies existantes des champs, en excluant le champ actuel
         double totalSuperficie = ferme.getChamps().stream()
                 .filter(champ -> !champ.getId().equals(champId))
                 .mapToDouble(Champ::getSuperficie)
                 .sum();
 
+        // Ajouter la superficie mise à jour
         totalSuperficie += champDetails.getSuperficie();
 
+        // Vérifier si la superficie totale dépasse celle de la ferme
         if (totalSuperficie >= ferme.getSuperficie()) {
             throw new SuperficieValidationException("The total area of the fields exceeds the farm's available area.");
         }
         existingChamp.setSuperficie(champDetails.getSuperficie());
+        // Mettre à jour d'autres champs si nécessaire
         return champRepository.save(existingChamp);
     }
 
