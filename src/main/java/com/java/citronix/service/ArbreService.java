@@ -7,4 +7,7 @@ import java.util.UUID;
 public interface ArbreService {
     Arbre createArbre(Arbre arbre, UUID champId);
 
+    Arbre updateArbre(UUID arbreId, Arbre arbreDetails);
+
+
 }

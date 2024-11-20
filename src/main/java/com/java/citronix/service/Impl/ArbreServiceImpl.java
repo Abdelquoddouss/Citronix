@@ -28,5 +28,15 @@ public class ArbreServiceImpl implements ArbreService {
         return arbreRepository.save(arbre);
     }
 
+    @Override
+    public Arbre updateArbre(UUID arbreId, Arbre arbreDetails) {
+        return arbreRepository.findById(arbreId)
+                .map(existingArbre -> {
+                    existingArbre.setDatePlantation(arbreDetails.getDatePlantation());
+                    return arbreRepository.save(existingArbre);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Arbre not found with ID: " + arbreId));
+    }
+
 
 }

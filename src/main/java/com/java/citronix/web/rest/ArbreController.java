@@ -26,6 +26,12 @@ public class ArbreController {
         return ResponseEntity.ok(arbreMapper.toResponse(createdArbre));
     }
 
+    @PutMapping("/{arbreId}")
+    public ResponseEntity<ArbreResponse> updateArbre(@PathVariable UUID arbreId, @RequestBody ArbreVm arbreVm) {
+        Arbre arbreDetails = arbreMapper.toEntity(arbreVm);
+        Arbre updatedArbre = arbreService.updateArbre(arbreId, arbreDetails);
+        return ResponseEntity.ok(arbreMapper.toResponse(updatedArbre));
+    }
 
 
 }
