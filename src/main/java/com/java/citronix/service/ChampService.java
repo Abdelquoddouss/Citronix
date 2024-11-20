@@ -10,8 +10,8 @@ public interface ChampService {
     Champ save(Champ champ, UUID fermeId);
     Champ updateChamp(UUID champId, Champ champDetails);
     Champ getChampById(UUID champId);
-//    List<Champ> getAllChampsByFerme(UUID fermeId);
-//    void deleteChamp(UUID champId);
+    List<Champ> getAllChampsByFerme(UUID fermeId);
+    void deleteChamp(UUID champId);
 
 
 }

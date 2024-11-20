@@ -1,15 +1,20 @@
 package com.java.citronix.web.rest;
 
 import com.java.citronix.domaine.entities.Champ;
+import com.java.citronix.dto.ChampWithFermeResponse;
 import com.java.citronix.service.ChampService;
 import com.java.citronix.web.vm.ChampVm;
 import com.java.citronix.web.vm.mappers.ChampMapper;
 import com.java.citronix.web.vm.response.ChampResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -33,17 +38,35 @@ public class ChampController {
     public ResponseEntity<ChampResponse> updateChamp(
             @PathVariable UUID champId,
             @RequestBody ChampVm champVm) {
+
         Champ champDetails = champMapper.toEntity(champVm);
         Champ updatedChamp = champService.updateChamp(champId, champDetails);
         return ResponseEntity.ok(champMapper.toResponse(updatedChamp));
     }
 
-
     @GetMapping("/{champId}")
-    public ResponseEntity<ChampResponse> getChampById(@PathVariable UUID champId) {
+    public ResponseEntity<ChampResponse> getChampById(@PathVariable @Valid UUID champId) {
         Champ champ = champService.getChampById(champId);
         return ResponseEntity.ok(champMapper.toResponse(champ));
     }
 
+    @GetMapping("/ferme/{fermeId}")
+    public ResponseEntity<List<ChampWithFermeResponse>> getAllChampsByFerme(@PathVariable UUID fermeId) {
+        List<Champ> champs = champService.getAllChampsByFerme(fermeId);
+        List<ChampWithFermeResponse> response = champs.stream()
+                .map(champMapper::toChampWithFermeResponse)
+                .toList();
+        return ResponseEntity.ok(response);
+    }
+
+
+    @DeleteMapping("/{champId}")
+    public ResponseEntity<Map<String, String>> deleteChamp(@PathVariable UUID champId) {
+        champService.deleteChamp(champId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Champ with ID " + champId + " has been successfully deleted.");
+        return ResponseEntity.ok(response);
+    }
 
 }

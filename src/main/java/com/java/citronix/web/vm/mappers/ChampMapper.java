@@ -1,6 +1,7 @@
 package com.java.citronix.web.vm.mappers;
 
 import com.java.citronix.domaine.entities.Champ;
+import com.java.citronix.dto.ChampWithFermeResponse;
 import com.java.citronix.web.vm.ChampVm;
 import com.java.citronix.web.vm.response.ChampResponse;
 import org.mapstruct.Mapper;
@@ -16,5 +17,10 @@ public interface ChampMapper {
 
     @Mapping(target = "fermeId", source = "ferme.id")
     ChampResponse toResponse(Champ champ);
+
+    @Mapping(target = "champId", source = "id")
+    @Mapping(target = "fermeId", source = "ferme.id")
+    @Mapping(target = "fermeNom", source = "ferme.nom")
+    ChampWithFermeResponse toChampWithFermeResponse(Champ champ);
 
 }
