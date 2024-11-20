@@ -59,7 +59,6 @@ public class ChampController {
         return ResponseEntity.ok(response);
     }
 
-
     @DeleteMapping("/{champId}")
     public ResponseEntity<Map<String, String>> deleteChamp(@PathVariable UUID champId) {
         champService.deleteChamp(champId);

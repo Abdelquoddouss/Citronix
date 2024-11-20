@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/arbres")
@@ -37,6 +39,15 @@ public class ArbreController {
     public ResponseEntity<ArbreResponse> getArbreById(@PathVariable UUID arbreId) {
         Arbre arbre = arbreService.getArbreById(arbreId);
         return ResponseEntity.ok(arbreMapper.toResponse(arbre));
+    }
+
+    @GetMapping("/champ/{champId}")
+    public ResponseEntity<List<ArbreResponse>> getArbresByChamp(@PathVariable UUID champId) {
+        List<Arbre> arbres = arbreService.getArbresByChamp(champId);
+        List<ArbreResponse> response = arbres.stream()
+                .map(arbreMapper::toResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
     }
 
 

@@ -9,6 +9,7 @@ import com.java.citronix.service.ArbreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -42,6 +43,13 @@ public class ArbreServiceImpl implements ArbreService {
     public Arbre getArbreById(UUID arbreId) {
         return arbreRepository.findById(arbreId)
                 .orElseThrow(() -> new ResourceNotFoundException("Arbre not found with ID: " + arbreId));
+    }
+
+    @Override
+    public List<Arbre> getArbresByChamp(UUID champId) {
+        Champ champ = champRepository.findById(champId)
+                .orElseThrow(() -> new ResourceNotFoundException("Champ not found with ID: " + champId));
+        return champ.getArbres();
     }
 
 
