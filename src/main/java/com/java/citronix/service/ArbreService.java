@@ -9,5 +9,7 @@ public interface ArbreService {
 
     Arbre updateArbre(UUID arbreId, Arbre arbreDetails);
 
+    Arbre getArbreById(UUID arbreId);
+
 
 }

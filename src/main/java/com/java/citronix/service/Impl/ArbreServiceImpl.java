@@ -38,5 +38,11 @@ public class ArbreServiceImpl implements ArbreService {
                 .orElseThrow(() -> new ResourceNotFoundException("Arbre not found with ID: " + arbreId));
     }
 
+    @Override
+    public Arbre getArbreById(UUID arbreId) {
+        return arbreRepository.findById(arbreId)
+                .orElseThrow(() -> new ResourceNotFoundException("Arbre not found with ID: " + arbreId));
+    }
+
 
 }

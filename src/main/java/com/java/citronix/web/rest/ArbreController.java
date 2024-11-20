@@ -33,5 +33,11 @@ public class ArbreController {
         return ResponseEntity.ok(arbreMapper.toResponse(updatedArbre));
     }
 
+    @GetMapping("/{arbreId}")
+    public ResponseEntity<ArbreResponse> getArbreById(@PathVariable UUID arbreId) {
+        Arbre arbre = arbreService.getArbreById(arbreId);
+        return ResponseEntity.ok(arbreMapper.toResponse(arbre));
+    }
+
 
 }
