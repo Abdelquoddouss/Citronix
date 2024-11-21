@@ -3,6 +3,7 @@ package com.java.citronix.service.Impl;
 import com.java.citronix.domaine.entities.Arbre;
 import com.java.citronix.domaine.entities.Champ;
 import com.java.citronix.exception.ResourceNotFoundException;
+import com.java.citronix.exception.ValidationException;
 import com.java.citronix.repository.ArbreRepository;
 import com.java.citronix.repository.ChampRepository;
 import com.java.citronix.service.ArbreService;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,9 +29,25 @@ public class ArbreServiceImpl implements ArbreService {
     public Arbre createArbre(Arbre arbre, UUID champId) {
         Champ champ = champRepository.findById(champId)
                 .orElseThrow(() -> new ResourceNotFoundException("Champ not found with ID: " + champId));
+
+        int month = arbre.getDatePlantation().getMonthValue();
+        if (month < 3 || month > 5) {
+            throw new ValidationException("La plantation n'est autorisée que de mars à mai.");
+        }
+
+        if (arbre.getDatePlantation().isAfter(LocalDate.now())) {
+            throw new ValidationException("La date de plantation ne peut pas être dans le futur.");
+        }
+
+        boolean arbreExiste = arbreRepository.existsByChampAndDatePlantation(champ, arbre.getDatePlantation());
+        if (arbreExiste) {
+            throw new ValidationException("Un arbre avec cette date de plantation existe déjà dans ce champ.");
+        }
+
         arbre.setChamp(champ);
         return arbreRepository.save(arbre);
     }
+
 
     @Override
     public Arbre updateArbre(UUID arbreId, Arbre arbreDetails) {
