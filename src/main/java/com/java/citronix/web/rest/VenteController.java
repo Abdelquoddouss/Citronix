@@ -56,4 +56,11 @@ public class VenteController {
         venteService.deleteVente(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}/revenu")
+    public ResponseEntity<Double> calculerRevenu(@PathVariable UUID id) {
+        Double revenu = venteService.calculerRevenu(id);
+        return ResponseEntity.ok(revenu);
+    }
+
 }

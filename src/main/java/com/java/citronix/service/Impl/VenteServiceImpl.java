@@ -38,4 +38,10 @@ public class VenteServiceImpl implements VenteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Vente not found with ID: " + venteId));
         venteRepository.delete(vente);
     }
+
+    public Double calculerRevenu(UUID venteId) {
+        Vente vente = getVenteById(venteId);
+        return vente.calculerRevenu();
+    }
+
 }

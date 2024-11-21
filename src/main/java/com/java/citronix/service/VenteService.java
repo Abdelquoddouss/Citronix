@@ -10,5 +10,6 @@ public interface VenteService {
     Vente getVenteById(UUID venteId);
     List<Vente> getAllVentes();
     void deleteVente(UUID venteId);
+    Double calculerRevenu(UUID venteId);
 
 }
