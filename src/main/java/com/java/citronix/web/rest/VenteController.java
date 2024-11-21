@@ -63,4 +63,13 @@ public class VenteController {
         return ResponseEntity.ok(revenu);
     }
 
+    @GetMapping("/historique")
+    public ResponseEntity<List<VenteResponse>> getHistoriqueVentes() {
+        List<Vente> ventes = venteService.getHistoriqueVentes();
+        List<VenteResponse> response = ventes.stream()
+                .map(venteMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
+    }
+
 }

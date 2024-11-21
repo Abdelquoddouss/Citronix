@@ -7,6 +7,7 @@ import com.java.citronix.service.VenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,4 +45,10 @@ public class VenteServiceImpl implements VenteService {
         return vente.calculerRevenu();
     }
 
+
+    @Override
+    public List<Vente> getHistoriqueVentes() {
+        // Retourne les ventes passées (dateVente < date actuelle)
+        return venteRepository.findByDateVenteBefore(LocalDate.now());
+    }
 }

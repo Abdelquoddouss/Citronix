@@ -11,5 +11,6 @@ public interface VenteService {
     List<Vente> getAllVentes();
     void deleteVente(UUID venteId);
     Double calculerRevenu(UUID venteId);
+    List<Vente> getHistoriqueVentes();
 
 }
