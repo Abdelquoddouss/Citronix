@@ -34,4 +34,17 @@ public class Arbre {
     public int getAge() {
         return datePlantation != null ? Period.between(datePlantation, LocalDate.now()).getYears()  : 0;
     }
+
+    @Transient
+    public double getProductivite() {
+        int age = getAge();
+        if (age < 3) {
+            return 2.5;
+        } else if (age <= 10) {
+            return 12.0;
+        } else {
+            return 20.0;
+        }
+    }
+
 }
