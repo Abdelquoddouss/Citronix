@@ -7,6 +7,7 @@ import com.java.citronix.service.RecolteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,4 +27,15 @@ public class RecolteServiceImpl implements RecolteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Recolte not found with ID: " + recolteId));
     }
 
+    @Override
+    public List<Recolte> getAllRecoltes() {
+        return recolteRepository.findAll();
+    }
+
+    @Override
+    public void deleteRecolte(UUID recolteId) {
+        Recolte recolte = recolteRepository.findById(recolteId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recolte not found with ID: " + recolteId));
+        recolteRepository.delete(recolte);
+    }
 }
