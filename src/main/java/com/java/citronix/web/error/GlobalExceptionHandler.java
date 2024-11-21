@@ -1,9 +1,6 @@
 package com.java.citronix.web.error;
 
-import com.java.citronix.exception.FermeNotFoundException;
-import com.java.citronix.exception.InvalidSearchCriteriaException;
-import com.java.citronix.exception.NoResultsFoundException;
-import com.java.citronix.exception.SuperficieValidationException;
+import com.java.citronix.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -54,5 +51,12 @@ public class GlobalExceptionHandler {
         response.put("error", "Superficie Validation Error");
         response.put("message", ex.getMessage());
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Map<String, String>> handleValidationException(ValidationException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", ex.getMessage());
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 }

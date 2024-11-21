@@ -107,7 +107,15 @@ public class ChampServiceImpl implements ChampService {
         Champ champ = champRepository.findById(champId)
                 .orElseThrow(() -> new ResourceNotFoundException("Champ not found with ID: " + champId));
 
+        champ.getArbres().forEach(arbre -> {
+            arbre.setChamp(null);
+        });
+        champ.getArbres().clear();
+
+        champRepository.save(champ);
+
         champRepository.delete(champ);
     }
+
 
 }
