@@ -6,10 +6,14 @@ import com.java.citronix.web.vm.ArbreVm;
 import com.java.citronix.web.vm.mappers.ArbreMapper;
 import com.java.citronix.web.vm.response.ArbreResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -42,13 +46,19 @@ public class ArbreController {
     }
 
     @GetMapping("/champ/{champId}")
-    public ResponseEntity<List<ArbreResponse>> getArbresByChamp(@PathVariable UUID champId) {
-        List<Arbre> arbres = arbreService.getArbresByChamp(champId);
-        List<ArbreResponse> response = arbres.stream()
-                .map(arbreMapper::toResponse)
-                .collect(Collectors.toList());
+    public ResponseEntity<Page<ArbreResponse>> getArbresByChamp(@PathVariable UUID champId, Pageable pageable) {
+        Page<Arbre> arbres = arbreService.getArbresByChamp(champId, pageable);
+        Page<ArbreResponse> response = arbres.map(arbreMapper::toResponse);
         return ResponseEntity.ok(response);
     }
+
+
+    @DeleteMapping("/{arbreId}")
+    public ResponseEntity<String> deleteArbre(@PathVariable UUID arbreId) {
+        arbreService.deleteArbre(arbreId);
+        return ResponseEntity.ok("Tree successfully deleted.");
+    }
+
 
 
 }

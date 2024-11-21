@@ -14,4 +14,5 @@ public class ArbreResponse {
     private UUID id;
     private LocalDate datePlantation;
     private UUID champId;
+    private int age;
 }

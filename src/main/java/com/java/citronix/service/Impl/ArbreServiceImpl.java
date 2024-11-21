@@ -7,6 +7,8 @@ import com.java.citronix.repository.ArbreRepository;
 import com.java.citronix.repository.ChampRepository;
 import com.java.citronix.service.ArbreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,11 +48,18 @@ public class ArbreServiceImpl implements ArbreService {
     }
 
     @Override
-    public List<Arbre> getArbresByChamp(UUID champId) {
-        Champ champ = champRepository.findById(champId)
-                .orElseThrow(() -> new ResourceNotFoundException("Champ not found with ID: " + champId));
-        return champ.getArbres();
+    public Page<Arbre> getArbresByChamp(UUID champId, Pageable pageable) {
+        return arbreRepository.findByChampId(champId,pageable);
     }
+
+
+    @Override
+    public void deleteArbre(UUID arbreId) {
+        Arbre arbre = arbreRepository.findById(arbreId)
+                .orElseThrow(() -> new ResourceNotFoundException("Arbre not found with ID: " + arbreId));
+        arbreRepository.delete(arbre);
+    }
+
 
 
 }
