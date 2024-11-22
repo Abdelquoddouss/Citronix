@@ -11,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Table(name = "farm")
 public class Ferme {
 
 
