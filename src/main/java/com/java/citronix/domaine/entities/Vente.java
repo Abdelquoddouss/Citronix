@@ -30,4 +30,14 @@ public class Vente {
     @ManyToOne
     @JoinColumn(name = "recolte_id")
     private Recolte recolte;
+
+    @Transient
+    public Double calculerRevenu() {
+        if (quantiteVendue != null && prixUnitaire != null) {
+            return quantiteVendue * prixUnitaire;
+        }
+        return 0.0;
+    }
+
+
 }

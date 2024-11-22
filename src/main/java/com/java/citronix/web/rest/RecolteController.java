@@ -6,10 +6,12 @@ import com.java.citronix.service.RecolteService;
 import com.java.citronix.web.vm.RecolteVm;
 import com.java.citronix.web.vm.mappers.RecolteMapper;
 import com.java.citronix.web.vm.response.RecolteResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +24,7 @@ public class RecolteController {
 
 
     @PostMapping
-    public ResponseEntity<RecolteResponse> createRecolte(@RequestBody RecolteVm recolteVm) {
+    public ResponseEntity<RecolteResponse> createRecolte(@RequestBody @Valid RecolteVm recolteVm) {
         Recolte recolte = recolteMapper.toEntity(recolteVm);
         Recolte createdRecolte = recolteService.createRecolte(recolte);
         return ResponseEntity.ok(recolteMapper.toResponse(createdRecolte));
@@ -34,5 +36,20 @@ public class RecolteController {
         return ResponseEntity.ok(recolteMapper.toResponse(recolte));
     }
 
+
+    @GetMapping
+    public ResponseEntity<List<RecolteResponse>> getAllRecoltes() {
+        List<Recolte> recoltes = recolteService.getAllRecoltes();
+        List<RecolteResponse> response = recoltes.stream()
+                .map(recolteMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{recolteId}")
+    public ResponseEntity<String> deleteRecolte(@PathVariable UUID recolteId) {
+        recolteService.deleteRecolte(recolteId);
+        return ResponseEntity.ok("Recolte successfully deleted.");
+    }
 
 }
