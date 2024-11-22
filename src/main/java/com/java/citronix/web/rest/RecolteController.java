@@ -6,6 +6,7 @@ import com.java.citronix.service.RecolteService;
 import com.java.citronix.web.vm.RecolteVm;
 import com.java.citronix.web.vm.mappers.RecolteMapper;
 import com.java.citronix.web.vm.response.RecolteResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class RecolteController {
 
 
     @PostMapping
-    public ResponseEntity<RecolteResponse> createRecolte(@RequestBody RecolteVm recolteVm) {
+    public ResponseEntity<RecolteResponse> createRecolte(@RequestBody @Valid RecolteVm recolteVm) {
         Recolte recolte = recolteMapper.toEntity(recolteVm);
         Recolte createdRecolte = recolteService.createRecolte(recolte);
         return ResponseEntity.ok(recolteMapper.toResponse(createdRecolte));

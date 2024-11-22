@@ -18,6 +18,18 @@ public class RecolteServiceImpl implements RecolteService {
 
     @Override
     public Recolte createRecolte(Recolte recolte) {
+
+
+        recolte.getDetailsRecolte().forEach(hd ->{
+            hd.setRecolte(recolte);
+            hd.setQuantite(hd.getArbre().getProductivite());
+        });
+        recolte.setQuantiteTotal(recolte.
+                getDetailsRecolte().stream().
+                mapToDouble(d -> d.getQuantite()).sum());
+
+
+
         return recolteRepository.save(recolte);
     }
 

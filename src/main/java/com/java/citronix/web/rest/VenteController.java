@@ -50,7 +50,6 @@ public class VenteController {
         return ResponseEntity.ok(response);
     }
 
-    // Supprimer une vente
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVente(@PathVariable UUID id) {
         venteService.deleteVente(id);
@@ -71,5 +70,6 @@ public class VenteController {
                 .toList();
         return ResponseEntity.ok(response);
     }
+
 
 }
