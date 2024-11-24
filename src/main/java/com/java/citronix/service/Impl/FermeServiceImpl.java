@@ -30,6 +30,9 @@ public class FermeServiceImpl implements FermeService {
 
     @Override
     public Ferme createFerme(Ferme ferme) {
+        if (fermeRepository.findByNomOrLocalisation(ferme.getNom(), ferme.getLocalisation()).isPresent()) {
+            throw new IllegalArgumentException("Une ferme avec ce nom ou cette localisation existe déjà.");
+        }
         return fermeRepository.save(ferme);
     }
 
